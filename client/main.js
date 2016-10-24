@@ -24,6 +24,12 @@ myApp.config(function ($stateProvider, $urlRouterProvider) {
       templateUrl: 'templates/register.html',
       controller: 'registerController as registerCtrl'
     })
+    .state('stories', {
+      url: '/stories',
+      templateUrl: 'templates/stories.html',
+      controller: 'storiesController as sc',
+      restricted: true
+    })
     .state('one', {
       url: '/one',
       template: '<h1>This is page one!</h1>'
@@ -38,7 +44,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider) {
       templateUrl: 'templates/profile.html',
       restricted: true
     })
-    
+
 })
 
 myApp.run(function ($rootScope, $location, $state, AuthService) {
@@ -49,7 +55,7 @@ myApp.run(function ($rootScope, $location, $state, AuthService) {
       // console.log(toState)
       if (toState.restricted && !AuthService.isLoggedIn()){
         // $location.path('/login')
-        $state.go('login'); 
+        $state.go('login');
       }
     })
   })

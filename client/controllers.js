@@ -3,13 +3,15 @@ angular.module('myApp')
   .controller('loginController', loginController)
   .controller('logoutController', logoutController)
   .controller('registerController', registerController)
-    
+  .controller('storiesController', storiesController)
+
 
   mainController.$inject = ['$rootScope', '$state', 'AuthService']
   loginController.$inject = ['$state', 'AuthService']
   logoutController.$inject = ['$state', 'AuthService']
   registerController.$inject = ['$state', 'AuthService']
-  
+  storiesController.$inject = ['$http', '$state', 'AuthService']
+
 
 function mainController($rootScope, $state, AuthService) {
   var vm = this
@@ -50,7 +52,7 @@ function loginController($state, AuthService) {
       })
   }
 }
- 
+
 
 // LOGOUT CONTROLLER:
 function logoutController($state, AuthService) {
@@ -90,4 +92,25 @@ function registerController($state, AuthService) {
         vm.registerForm = {}
       })
   }
+}
+
+function storiesController($http, $state, AuthService){
+  var vm = this;
+  vm.stories = [];
+
+  $http.get('/api/stories')
+    .then(function(data){
+      vm.stories = data.data;
+    })
+
+  vm.createStory = function(){
+    console.log('btn clicked');
+
+    $http.post('/api/stories', vm.newStory)
+      .then(function(data){
+        vm.stories.push(data.data);
+        vm.newStory = {};
+      })
+  }
+
 }

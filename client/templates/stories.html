@@ -1,0 +1,12 @@
+<input type="text" name="url" value="" ng-model="sc.newStory.url">
+<button type="button" name="button" ng-click="sc.createStory()">Post</button>
+
+<div class="" ng-repeat="story in sc.stories">
+  <p>{{ story.url }}</p>
+  <p>{{ story.title }}</p>
+  <p>{{ story.author }}</p>
+  <p>{{ story.image }}</p>
+  <p>{{ story.publishDate }}</p>
+  <p>{{ story.sentences.join() }}</p>
+
+</div>
