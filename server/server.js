@@ -2,6 +2,7 @@
 var port = process.env.PORT || 3000
 
 // dependencies
+var dotenv = require('dotenv').load({silent: true});
 var express = require('express')
 var logger = require('morgan')
 var cookieParser = require('cookie-parser')
@@ -27,6 +28,7 @@ var app = express()
 
 // require routes
 var routes = require('./routes/api.js')
+var storyRoutes = require('./routes/stories.js')
 
 // define middleware
 app.use(express.static(path.join(__dirname, '../client')))
@@ -45,6 +47,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 // routes
 app.use('/user/', routes)
+app.use('/api/stories/', storyRoutes)
 
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '../client', 'index.html'))
