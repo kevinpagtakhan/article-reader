@@ -8,9 +8,9 @@ var storySchema = mongoose.Schema({
   text: String,
   image: String,
   publishDate: String,
-  sentences: [String];
+  sentences: [String]
 }, {timestamps: true})
 
-var Story = mongoose.model('Story', StorySchema);
+var Story = mongoose.model('Story', storySchema);
 
 module.exports = Story;
