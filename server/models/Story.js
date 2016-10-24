@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var storySchema = mongoose.Schema({
-  _by: {type: mongoose.Schema.Type.ObjectId, ref: 'User'},
+  _by: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   url: String,
   title: String,
   author: String,
