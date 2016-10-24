@@ -16,17 +16,12 @@ router.route('/')
     })
   })
   .post(function(req, res){
+    var currentUserId = req.user._id;
     textapi.combined({
       "url": req.body.url,
       "endpoint": ["summarize", "extract"]
     }, function(err, result) {
       if (err === null) {
-
-        // result.results.forEach(function(r) {
-        //   console.log(r.endpoint + ':');
-        //   console.log(r.result);
-        // });
-
         var article = result.results;
         var newStory = {
           url: req.body.url,
@@ -38,12 +33,27 @@ router.route('/')
           sentences: article[1].result.sentences
         }
 
-        Story.create(newStory, function(err, data){
-          res.json(err || data);
+        Story.create(newStory, function(err, story){
+          if(err){
+            res.json(err);
+          } else {
+            User.findById(currentUserId, function(err, user){
+              if(err) {
+                res.json(err);
+              } else {
+                user.stories.push(story._id);
+                user.save(function(err, updatedUser){
+                  if(err) {
+                    res.json(err);
+                  } else {
+                    res.json(story);
+                  }
+                })
+              }
+            })
+          }
         })
       } else {
-        // console.log(err)
-
         res.json(err);
       }
     });
