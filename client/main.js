@@ -42,6 +42,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider) {
     .state('profile', {
       url: '/profile',
       templateUrl: 'templates/profile.html',
+      controller: 'userController as uc',
       restricted: true
     })
 

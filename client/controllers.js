@@ -4,6 +4,7 @@ angular.module('myApp')
   .controller('logoutController', logoutController)
   .controller('registerController', registerController)
   .controller('storiesController', storiesController)
+  .controller('userController', userController)
 
 
   mainController.$inject = ['$rootScope', '$state', 'AuthService']
@@ -11,6 +12,7 @@ angular.module('myApp')
   logoutController.$inject = ['$state', 'AuthService']
   registerController.$inject = ['$state', 'AuthService']
   storiesController.$inject = ['$http', '$state', 'AuthService']
+  userController.$inject = ['$http', '$state', 'AuthService']
 
 
 function mainController($rootScope, $state, AuthService) {
@@ -113,4 +115,18 @@ function storiesController($http, $state, AuthService){
       })
   }
 
+}
+
+function userController($http, $state, AuthService){
+  var vm = this;
+  vm.myStories = [];
+
+  AuthService.getUserStatus()
+    .then(function(data){
+      vm.currentUser = data.data.user
+      $http.get('/user/' + vm.currentUser._id)
+        .then(function(user){
+          vm.currentUser = user.data;
+        })
+    })
 }

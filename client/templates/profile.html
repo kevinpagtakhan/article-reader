@@ -1,1 +1,13 @@
 <h1>Current User: {{ main.currentUser.username }}</h1>
+
+<h2>Stories</h2>
+
+<div class="list-group">
+  <a href="{{ story.url }}" target="_blank" class="list-group-item" ng-repeat="story in uc.currentUser.stories">
+    <h4>{{ story.title }}</h4>
+    <p><small>by {{ story.author }} on {{ story.publishDate }}</small></p>
+    <p>
+      {{ story.sentences.join(' ') }}
+    </p>
+  </a>
+</div>

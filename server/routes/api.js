@@ -63,5 +63,12 @@ router.get('/status', function(req, res) {
   })
 })
 
+router.get('/:id', function(req, res){
+  console.log('hello');
+  User.findById(req.params.id).populate('stories').exec(function(err, user){
+    res.json(err || user)
+  })
+})
+
 
 module.exports = router
